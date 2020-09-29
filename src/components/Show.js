@@ -30,6 +30,7 @@ export default function Show(props) {
 			<p>Post ID: {posts.id}</p>
 			<p>Created by: User ID: {posts.user_id}</p>
 			<p>Entry: {posts.entry}</p>
+			<Link to={`/posts`}>Back to index</Link>
 			<hr />
 		</div>
 	);

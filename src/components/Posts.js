@@ -30,6 +30,7 @@ export default function Posts(props) {
 						<p>Post ID: {post.id}</p>
 						<p>Created by: User ID: {post.user_id}</p>
 						<p>Entry: {post.entry}</p>
+						<Link to={`/posts/${post.id}`}>See Post</Link>
 						<hr />
 					</div>
 				);
