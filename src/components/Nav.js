@@ -8,6 +8,8 @@ function Nav(props) {
 				<Link to="/posts/">Game Diary</Link>
 			</h1>
 			<Link to="/posts/new">New Post</Link>
+			<Link to="/users/login">Login</Link>
+			<Link to="/users/signup">Sign Up</Link>
 		</nav>
 	)
 }
