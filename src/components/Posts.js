@@ -24,11 +24,12 @@ export default function Posts(props) {
 		<div>
 			<h2>Posts</h2>
 			{posts.map((post) => {
+				console.log(post)
 				return (
 					<div key={post.id} className="post">
 						<h3>Date: {post.date}</h3>
 						<p>Post ID: {post.id}</p>
-						<p>Created by: User ID: {post.user_id}</p>
+						<p>Created by User: {post.user.username}</p>
 						<p>Entry: {post.entry}</p>
 						<Link to={`/posts/${post.id}`}>See Post</Link>
 						<hr />

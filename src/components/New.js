@@ -5,7 +5,7 @@ export default function New(props) {
 	const [formInputs, updateFormInputs] = useState({
 		date: "",
 		entry: "",
-		hidden: "",
+		hidden: ""
 	});
 
 	const handleChange = (event) => {
@@ -23,6 +23,7 @@ export default function New(props) {
 				formInputs
 			);
 			const data = response.data;
+
 			updateFormInputs({
 				date: "",
 				entry: "",
@@ -37,7 +38,7 @@ export default function New(props) {
 		<form onSubmit={handleSubmit}>
 			<label htmlFor="date">date</label>
 			<input
-				type="text"
+				type="date"
 				id="date"
 				value={formInputs.date}
 				onChange={handleChange}
