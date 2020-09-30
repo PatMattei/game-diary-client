@@ -47,7 +47,7 @@ export default function App(props) {
 
 	useEffect(() => {
 		if (localStorage.token) {
-			console.log("logged in")
+			console.log("logged in");
 			setIsLoggedIn(true);
 		} else {
 			setIsLoggedIn(false);
@@ -101,10 +101,7 @@ export default function App(props) {
 							path={`/users/login`}
 							render={() => {
 								return (
-									<Login
-										handleInput={handleInput}
-										handleLogin={handleLogin}
-									/>
+									<Login handleInput={handleInput} handleLogin={handleLogin} />
 								);
 							}}
 						/>
@@ -121,7 +118,10 @@ export default function App(props) {
 						/>
 						<Route path={`/posts/new`} component={New} />
 						<Route path={`/posts/:id/edit`} component={Edit} />
-						<Route path={`/posts/:id`} component={Show} posts={posts} />
+						<Route
+							path={`/posts/:id`}
+							component={Show}
+						/>
 						<Route
 							path="/"
 							render={() => {

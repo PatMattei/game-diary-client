@@ -29,7 +29,7 @@ export default function Posts(props) {
 					<div key={post.id} className="post">
 						<h3>Date: {post.date}</h3>
 						<p>Post ID: {post.id}</p>
-						<p>Created by: User: {post.user.username}</p>
+						<p>Created by User: {post.user.username}</p>
 						<p>Entry: {post.entry}</p>
 						<Link to={`/posts/${post.id}`}>See Post</Link>
 						<hr />

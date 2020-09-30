@@ -3,33 +3,31 @@ import { Link } from 'react-router-dom';
 
 
 export default function Show(props) {
-	const id = props.match.params.id;
-	const [posts, setPosts] = useState([]);
+	const [post, setPost] = useState([]);
 
-	const getPosts = async () => {
-		console.log(posts)
+	const getPost = async () => {
+		const id = props.match.params.id;
 		try {
 			const response = await fetch(`http://localhost:3000/posts/${id}`);
 			const data = await response.json();
-			setPosts(data);
-			console.log(data);
+			setPost(data);
 		} catch (error) {
 			console.error(error);
 		}
 	};
 	useEffect(() => {
 		(async function () {
-			await getPosts();
+			await getPost();
 		})();
 	}, []);
+
 	
 	return (
 		<div>
 			<h2>Post Show</h2>
-			<h3>Date: {posts.date}</h3>
-			<p>Post ID: {posts.id}</p>
-			<p>Created by: User ID: {posts.user_id}</p>
-			<p>Entry: {posts.entry}</p>
+			<h3>Date: {post.date}</h3>
+			<p>Created by User: {post.user?.username}</p>
+			<p>Entry: {post.entry}</p>
 			<Link to={`/posts`}>Back to index</Link>
 			<hr />
 		</div>
