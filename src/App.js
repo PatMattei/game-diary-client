@@ -10,7 +10,7 @@ import Login from "./components/Login.js";
 import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
 
-export default function App() {
+export default function App(props) {
 	const history = useHistory();
 
 	const [posts, setPosts] = useState([]);
@@ -24,15 +24,16 @@ export default function App() {
 		event.preventDefault();
 		try {
 			const response = await axios.post(
-				(process.env.REACT_APP_API_URL || "http://localhost:3000") + "/users/login",
+				(process.env.REACT_APP_API_URL || "http://localhost:3000") +
+					"/users/login",
 				{
 					user: {
 						username: state.username,
 						password: state.password,
-					}
+					},
 				}
 			);
-			localStorage.token = await response.data.token;
+			localStorage.token = response.data.token;
 			setIsLoggedIn(true);
 			setState({
 				username: "",
@@ -45,36 +46,79 @@ export default function App() {
 	};
 
 	useEffect(() => {
-        if (localStorage.token) {
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
-    }, [isLoggedIn]);
+		if (localStorage.token) {
+			console.log("logged in")
+			setIsLoggedIn(true);
+		} else {
+			setIsLoggedIn(false);
+		}
+		console.log("isLoggedIn: ", isLoggedIn);
+	}, [isLoggedIn]);
 
 	const handleInput = (event) => {
 		setState({ ...state, [event.target.name]: event.target.value });
+	};
+
+	const handleLogOut = () => {
+		setState({
+			username: "",
+			password: "",
+		});
+		localStorage.clear();
+		setIsLoggedIn(false);
+	};
+
+	const handleSignUp = async (event) => {
+		event.preventDefault();
+		try {
+			const response = await axios.post(
+				(process.env.REACT_APP_API_URL || "http://localhost:3000") + "/users",
+				{
+					user: {
+						username: state.username,
+						password: state.password,
+					},
+				}
+			);
+			localStorage.token = await response.data.token;
+			setState({
+				username: "",
+				password: "",
+			});
+			setIsLoggedIn(true);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
 		<div className="App">
 			<div className="container">
 				<BrowserRouter>
-					<Nav />
+					<Nav isLoggedIn={isLoggedIn} handleLogOut={handleLogOut} />
 					<Switch>
 						<Route
 							path={`/users/login`}
 							render={() => {
 								return (
 									<Login
-										isLoggedIn={isLoggedIn}
 										handleInput={handleInput}
 										handleLogin={handleLogin}
 									/>
 								);
 							}}
 						/>
-						<Route path={`/users/signup`} component={SignUp} />
+						<Route
+							path={`/users/signup`}
+							render={() => {
+								return (
+									<SignUp
+										handleInput={handleInput}
+										handleSignUp={handleSignUp}
+									/>
+								);
+							}}
+						/>
 						<Route path={`/posts/new`} component={New} />
 						<Route path={`/posts/:id/edit`} component={Edit} />
 						<Route path={`/posts/:id`} component={Show} posts={posts} />
