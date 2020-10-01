@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
+
 export default function New(props) {
 	const [formInputs, updateFormInputs] = useState({
 		date: "",
@@ -34,6 +36,7 @@ export default function New(props) {
 		}
 	};
 
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<label htmlFor="date">date</label>
@@ -57,6 +60,7 @@ export default function New(props) {
 				value={formInputs.hidden}
 				onChange={handleChange}
 			/>
+			
 			<input type="submit" className="submit" />
 		</form>
 	);
