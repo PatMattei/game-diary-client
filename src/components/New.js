@@ -23,7 +23,9 @@ export default function New(props) {
 		try {
 			const response = await axios.post(
 				"http://localhost:3000/posts",
-				formInputs
+				(
+					[formInputs.date, formInputs.entry, formInputs.hidden]
+				)
 			);
 			const data = response.data;
 
