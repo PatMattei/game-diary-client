@@ -24,7 +24,6 @@ export default function Posts(props) {
 		<div>
 			<h2>Posts</h2>
 			{posts.map((post) => {
-				console.log(post)
 				return (
 					<div key={post.id} className="post">
 						<h3>Date: {post.date}</h3>

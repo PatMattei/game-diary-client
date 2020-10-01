@@ -10,6 +10,8 @@ import Login from "./components/Login.js";
 import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
 
+
+
 export default function App(props) {
 	const history = useHistory();
 
