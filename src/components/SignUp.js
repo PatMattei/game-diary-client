@@ -18,13 +18,8 @@ export default function SignUp(props) {
 					},
 				}
 			);
-
-			props.setState({
-				username: "",
-				password: "",
-				email: "",
-			});
-			history.push('/users/login');
+			props.handleLogin(event)
+			history.push('/');
 		} catch (error) {
 			console.log(error);
 		}

@@ -10,9 +10,9 @@ function Nav(props) {
 
 	if (props.isLoggedIn) {
 		navItems.push(
-		<Link to="/posts/new" key={2}>
-			New Post
-		</Link>,
+			<Link to="/posts/new" key={2}>
+				New Post
+			</Link>,
 			<Link to="/" onClick={props.handleLogOut} key={3}>
 				Logout
 			</Link>
@@ -30,7 +30,12 @@ function Nav(props) {
 		);
 	}
 
-	return <nav>{navItems}</nav>;
+	return (
+		<nav>
+			{navItems}
+			<p>Logged in: {props.isLoggedIn ? "true" : "false"}</p>
+		</nav>
+	);
 }
 
 export default Nav;

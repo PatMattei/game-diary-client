@@ -9,6 +9,7 @@ import Nav from "./components/Nav.js";
 import Login from "./components/Login.js";
 import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
+import UserPosts from "./components/UserPosts.js";
 
 
 
@@ -39,14 +40,14 @@ export default function App(props) {
 				}
 			);
 			localStorage.token = response.data.token;
-			console.log('test')
 			setIsLoggedIn();
 
 			setState({
 				username: "",
 				password: "",
+				email: "",
 			});
-			//history.push("/");
+			history.push("/");
 		} catch (error) {
 			console.log(error);
 		}
@@ -97,12 +98,17 @@ export default function App(props) {
 									<SignUp
 										handleInput={handleInput}
 										state={state}
+										handleLogin={handleLogin}
 										setState={setState}
 										isLoggedIn={isLoggedIn}
 										setIsLoggedIn={setIsLoggedIn}
 									/>
 								);
 							}}
+						/>
+						<Route
+							path={`/users/:id/`}
+							component={UserPosts}
 						/>
 						<Route path={`/posts/new`} component={New} />
 						<Route path={`/posts/:id/edit`} component={Edit} />
