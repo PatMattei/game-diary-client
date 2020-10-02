@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 import Posts from "./components/Posts.js";
 import Show from "./components/Show.js";
@@ -18,8 +19,16 @@ export default function App(props) {
 	const [state, setState] = useState({
 		username: "",
 		password: "",
+		email: "",
+		loggedInUser: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	const decodedToken = (token) => {
+		return jwt_decode(token);
+	};
+
+
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -31,6 +40,7 @@ export default function App(props) {
 					user: {
 						username: state.username,
 						password: state.password,
+						email: state.email,
 					},
 				}
 			);
@@ -38,9 +48,8 @@ export default function App(props) {
 			setIsLoggedIn();
 
 			setState({
-				username: "",
+				loggedInUser: state.username,
 				password: "",
-				email: "",
 			});
 			history.push("/");
 		} catch (error) {
@@ -54,8 +63,13 @@ export default function App(props) {
 			setIsLoggedIn(true);
 		} else {
 			setIsLoggedIn(false);
+			setState({
+				loggedInUser: "",
+				username: "",
+				password: "",
+				email: "",
+			});
 		}
-		console.log("isLoggedIn: ", isLoggedIn);
 	}, [isLoggedIn]);
 
 	const handleInput = (event) => {
@@ -66,9 +80,11 @@ export default function App(props) {
 		setState({
 			username: "",
 			password: "",
+			email: "",
+			loggedInUser: "",
 		});
-		localStorage.clear();
 		setIsLoggedIn(false);
+		localStorage.clear();
 	};
 
 	return (
@@ -107,11 +123,15 @@ export default function App(props) {
 						<Route path={`/users/:id/`} component={UserPosts} />
 						<Route path={`/posts/new`} component={New} />
 						<Route path={`/posts/:id/edit`} component={Edit} />
-						<Route path={`/posts/:id`} component={Show} />
+						<Route
+							path={`/posts/:id`}
+							component={Show}
+							isLoggedIn={isLoggedIn}
+						/>
 						<Route
 							path="/"
 							render={() => {
-								return <Posts />;
+								return <Posts state={state} isLoggedIn={isLoggedIn} />;
 							}}
 						/>
 					</Switch>

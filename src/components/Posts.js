@@ -77,6 +77,7 @@ export default function Posts(props) {
 
 	return (
 		<div>
+			<p>{props.state.loggedInUser}</p>
 			<h2>Posts</h2>
 			{posts.map(post => {
 				return (

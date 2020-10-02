@@ -79,8 +79,8 @@ export default function Posts(props) {
 
 	return (
 		<div>
-			<h2>Posts</h2>
-			Hello
+			<h2>Posts By This USer</h2>
+
 			{posts.map(post => {
 				if (post.user_id == id) {
 					return (
