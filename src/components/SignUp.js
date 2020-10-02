@@ -1,7 +1,10 @@
 import React from "react";
 import axios from "axios";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 
 export default function SignUp(props) {
+	const history = useHistory();
+
 	const handleSignUp = async (event) => {
 		event.preventDefault();
 		try {
@@ -11,15 +14,17 @@ export default function SignUp(props) {
 					user: {
 						username: props.state.username,
 						password: props.state.password,
+						email: props.state.email,
 					},
 				}
 			);
-			localStorage.token = await response.data.token;
+
 			props.setState({
 				username: "",
 				password: "",
+				email: "",
 			});
-			props.setIsLoggedIn(true);
+			history.push('/users/login');
 		} catch (error) {
 			console.log(error);
 		}
@@ -28,13 +33,15 @@ export default function SignUp(props) {
 	return (
 		<form onSubmit={handleSignUp}>
 			<h1>Create Your Account</h1>
-			<label htmlFor="username">USERNAME</label>
-			<input type="text" name="username" onChange={props.handleInput} />
+			<label htmlFor="username">Username</label>
+			<input type="text" name="username" onChange={props.handleInput} required />
 
+			<label htmlFor="email">Email</label>
+			<input type="email" name="email" onChange={props.handleInput} required />
 
-			<label htmlFor="password">PASSWORD</label>
-			<input type="password" name="password" onChange={props.handleInput} />
-			
+			<label htmlFor="password">Password</label>
+			<input type="password" name="password" onChange={props.handleInput} required />
+
 			<input type="submit" className="submit" value="Sign Up!" />
 			<p>
 				Already have an account? Log in <a href="/users/login">here.</a>

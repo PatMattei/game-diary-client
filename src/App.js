@@ -23,6 +23,8 @@ export default function App(props) {
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+
+
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		try {
@@ -37,7 +39,9 @@ export default function App(props) {
 				}
 			);
 			localStorage.token = response.data.token;
-			setIsLoggedIn(true);
+			console.log('test')
+			setIsLoggedIn();
+
 			setState({
 				username: "",
 				password: "",
@@ -49,8 +53,8 @@ export default function App(props) {
 	};
 
 	useEffect(() => {
-		if (localStorage.token) {
-			console.log("logged in");
+		console.log(localStorage.token === false)
+		if (localStorage.token != 'undefined' && localStorage.token) {
 			setIsLoggedIn(true);
 		} else {
 			setIsLoggedIn(false);
