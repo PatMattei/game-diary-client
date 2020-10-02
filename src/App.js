@@ -11,11 +11,8 @@ import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
 import UserPosts from "./components/UserPosts.js";
 
-
-
 export default function App(props) {
 	const history = useHistory();
-	
 
 	const [posts, setPosts] = useState([]);
 	const [state, setState] = useState({
@@ -23,8 +20,6 @@ export default function App(props) {
 		password: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-
 
 	const handleLogin = async (event) => {
 		event.preventDefault();
@@ -54,8 +49,8 @@ export default function App(props) {
 	};
 
 	useEffect(() => {
-		console.log(localStorage.token === false)
-		if (localStorage.token != 'undefined' && localStorage.token) {
+		console.log(localStorage.token === false);
+		if (localStorage.token != "undefined" && localStorage.token) {
 			setIsLoggedIn(true);
 		} else {
 			setIsLoggedIn(false);
@@ -76,7 +71,6 @@ export default function App(props) {
 		setIsLoggedIn(false);
 	};
 
-
 	return (
 		<div className="App">
 			<div className="container">
@@ -87,7 +81,11 @@ export default function App(props) {
 							path={`/users/login`}
 							render={() => {
 								return (
-									<Login handleInput={handleInput} handleLogin={handleLogin} />
+									<Login
+										isLoggedIn={isLoggedIn}
+										handleInput={handleInput}
+										handleLogin={handleLogin}
+									/>
 								);
 							}}
 						/>
@@ -106,16 +104,10 @@ export default function App(props) {
 								);
 							}}
 						/>
-						<Route
-							path={`/users/:id/`}
-							component={UserPosts}
-						/>
+						<Route path={`/users/:id/`} component={UserPosts} />
 						<Route path={`/posts/new`} component={New} />
 						<Route path={`/posts/:id/edit`} component={Edit} />
-						<Route
-							path={`/posts/:id`}
-							component={Show}
-						/>
+						<Route path={`/posts/:id`} component={Show} />
 						<Route
 							path="/"
 							render={() => {
