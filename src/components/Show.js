@@ -60,7 +60,7 @@ export default function Show(props) {
 					</div>
 				)
 			})}
-			<Link to={`/posts/${id}/edit`}>Edit this Post</Link>
+			<Link to={`/posts`}>Edit</Link>
 			<Link to={`/posts`}>Back to index</Link>
 			<hr />
 		</div>

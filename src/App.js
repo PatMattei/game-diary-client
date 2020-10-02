@@ -14,6 +14,7 @@ import Edit from "./components/Edit.js";
 
 export default function App(props) {
 	const history = useHistory();
+	
 
 	const [posts, setPosts] = useState([]);
 	const [state, setState] = useState({
@@ -70,28 +71,6 @@ export default function App(props) {
 		setIsLoggedIn(false);
 	};
 
-	const handleSignUp = async (event) => {
-		event.preventDefault();
-		try {
-			const response = await axios.post(
-				(process.env.REACT_APP_API_URL || "http://localhost:3000") + "/users",
-				{
-					user: {
-						username: state.username,
-						password: state.password,
-					},
-				}
-			);
-			localStorage.token = await response.data.token;
-			setState({
-				username: "",
-				password: "",
-			});
-			setIsLoggedIn(true);
-		} catch (error) {
-			console.log(error);
-		}
-	};
 
 	return (
 		<div className="App">
@@ -113,7 +92,10 @@ export default function App(props) {
 								return (
 									<SignUp
 										handleInput={handleInput}
-										handleSignUp={handleSignUp}
+										state={state}
+										setState={setState}
+										isLoggedIn={isLoggedIn}
+										setIsLoggedIn={setIsLoggedIn}
 									/>
 								);
 							}}
