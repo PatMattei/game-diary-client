@@ -51,7 +51,7 @@ export default function App(props) {
 				loggedInUser: state.username,
 				password: "",
 			});
-			history.push("/");
+			//history.push("/");
 		} catch (error) {
 			console.log(error);
 		}
