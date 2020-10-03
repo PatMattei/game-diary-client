@@ -31,12 +31,12 @@ export default function New(props) {
 		setSelectedGames([
 			...selectedGames,
 			{
-				guid: event.target.getAttribute('id'),
+				api_ref: event.target.getAttribute('id'),
 				name: event.target.getAttribute('name'),
-				image: event.target.getAttribute('image'),
+				img: event.target.getAttribute('img'),
+				post_id: 10
 			}
 		])
-
 		console.log(selectedGames)
 	};
 
@@ -60,6 +60,18 @@ export default function New(props) {
 				search: "",
 			});
 
+			return response;
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleGameSubmit = async (event) => {
+		 try {
+			const response = await axios.post("http://localhost:3000/games", {
+				game: selectedGames[0],
+			});
+			console.log(response);
 			history.push(`/users/${decodedToken(localStorage.token).user.id}`);
 		} catch (error) {
 			console.error(error);
@@ -148,6 +160,10 @@ export default function New(props) {
 				<input type="submit" className="submit" />
 			</form>
 
+			<form onSubmit={handleGameSubmit}>
+				<input type="submit" value="Submit games" />
+			</form>
+
 			<div id="searchBox">
 				{games.map((game) => {
 					return (
@@ -158,15 +174,16 @@ export default function New(props) {
 							<input
 								type="button"
 								value="Add game to Post"
-								id={game.guid}
+								api_ref={game.guid}
 								name={game.name}
-								image={game.image.original_url}
+								img={game.image.original_url}
 								onClick={handleSelectedGames}
 							/>
 						</div>
 					);
 				})}
 			</div>
+			
 		</>
 	);
 }
