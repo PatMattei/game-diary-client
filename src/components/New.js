@@ -62,10 +62,6 @@ export default function New(props) {
 			const response = await axios.post(searchString);
 			const searchData = response.data.results;
 			setGames(searchData);
-
-			setFormInputs({
-				search: "",
-			});
 		} catch (error) {
 			console.error(error);
 		}
