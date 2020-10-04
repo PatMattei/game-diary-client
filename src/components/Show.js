@@ -9,6 +9,7 @@ export default function Show(props) {
 
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const id = props.match.params.id;
+	
 
 	const getGames = async () => {
 		try {
@@ -54,11 +55,8 @@ export default function Show(props) {
 			{games.map(game => {
 				return (
 					<div key={game.id}>
-						<p>Game entry ID: {game.id}</p>
-						<p>Game api_ref: {game.api_ref}</p>
 						<p>Game Name: {game.name}</p>
 						<img src={game.img} />
-						<p>Game entry: {game.entry}</p>
 						<hr />
 					</div>
 				)
