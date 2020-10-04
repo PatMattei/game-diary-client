@@ -13,6 +13,7 @@ import Edit from "./components/Edit.js";
 import UserPosts from "./components/UserPosts.js";
 
 export default function App(props) {
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const history = useHistory();
 
 	const [posts, setPosts] = useState([]);
@@ -20,7 +21,7 @@ export default function App(props) {
 		username: "",
 		password: "",
 		email: "",
-		loggedInUser: "",
+
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -28,22 +29,16 @@ export default function App(props) {
 		return jwt_decode(token);
 	};
 
-
-
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(
-				(process.env.REACT_APP_API_URL || "http://localhost:3000") +
-					"/users/login",
-				{
-					user: {
-						username: state.username,
-						password: state.password,
-						email: state.email,
-					},
-				}
-			);
+			const response = await axios.post(`${serverUrl}/users/login`, {
+				user: {
+					username: state.username,
+					password: state.password,
+					email: state.email,
+				},
+			});
 			localStorage.token = response.data.token;
 			setIsLoggedIn();
 
@@ -58,7 +53,6 @@ export default function App(props) {
 	};
 
 	useEffect(() => {
-		console.log(localStorage.token === false);
 		if (localStorage.token != "undefined" && localStorage.token) {
 			setIsLoggedIn(true);
 		} else {
@@ -120,9 +114,14 @@ export default function App(props) {
 								);
 							}}
 						/>
-						<Route path={`/users/:id/`} component={UserPosts} />
+						<Route
+							path={`/users/:id/`}
+							component={UserPosts}
+							serverUrl={serverUrl}
+							handleInput={handleInput}
+						/>
 						<Route path={`/posts/new`} component={New} />
-						<Route path={`/posts/:id/edit`} component={Edit} />
+						<Route path={`/posts/:id/edit`} component={Edit} serverUrl={serverUrl}/>
 						<Route
 							path={`/posts/:id`}
 							component={Show}
