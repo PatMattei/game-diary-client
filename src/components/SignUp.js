@@ -79,7 +79,7 @@ export default function SignUp(props) {
 
 	return (
 		<form onSubmit={handleSignUp}>
-			<h1>Create Your Account</h1>
+			<h1>Create Your Account- Check for upload</h1>
 			<label htmlFor="username">Username</label>
 			<input
 				type="text"
