@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import dotenv from "dotenv";
+import jwt_decode from "jwt-decode";
 
 export default function Posts(props) {
 	const [posts, setPosts] = useState([]);
 	const [games, setGames] = useState([]);
+
+	const decodedToken = (token) => {
+		return jwt_decode(token);
+	};
 
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -43,7 +48,6 @@ export default function Posts(props) {
 
 	return (
 		<div>
-			<p>{props.state.loggedInUser}</p>
 			<h2>Posts</h2>
 			{posts.map((post) => {
 				return (
@@ -51,8 +55,9 @@ export default function Posts(props) {
 						<h3>Date: {post.date}</h3>
 						<p>Post ID: {post.id}</p>
 						<p>
-							Created by User:{" "}
+							Created by User:
 							<Link to={`/users/${post.user_id}`}>{post.user.username}</Link>
+							<img src={post.user.avatar} className="avatar" />
 						</p>
 						<p>Entry: {post.entry}</p>
 						<div>

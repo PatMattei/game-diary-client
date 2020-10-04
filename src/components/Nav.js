@@ -34,6 +34,8 @@ function Nav(props) {
 		<nav>
 			{navItems}
 			<p>Logged in: {props.isLoggedIn ? "true" : "false"}</p>
+			<p>{props.isLoggedIn ? `Username: ${props.state.loggedInUser}` : "false"}</p>
+			{props.isLoggedIn ? <img src={props.state.avatar}/> : ""}
 		</nav>
 	);
 }

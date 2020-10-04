@@ -81,14 +81,13 @@ export default function Posts(props) {
 
 	return (
 		<div>
-			<h2>Posts By This USer</h2>
-
+			<h2>View Posts</h2>
 			{posts.map(post => {
 				if (post.user_id == id) {
 					return (
 						<div key={post.id} className="post">
+							<img src={post.user?.avatar} className="avatar" />
 							<h3>Date: {post.date}</h3>
-							<p>Post ID: {post.id}</p>
 							<p>Created by User: {post.user.username}</p>
 							<p>Entry: {post.entry}</p>
 							<Link to={`/posts/${post.id}`}>See Post</Link>
