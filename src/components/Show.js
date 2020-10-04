@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import dotenv from "dotenv";
-
+import jwt_decode from "jwt-decode";
 
 export default function Show(props) {
 	const [post, setPost] = useState([]);
@@ -10,6 +10,9 @@ export default function Show(props) {
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const id = props.match.params.id;
 	
+	const decodedToken = (token) => {
+		return jwt_decode(token);
+	};
 
 	const getGames = async () => {
 		try {
@@ -49,7 +52,9 @@ export default function Show(props) {
 		<div>
 			<h2>Post Show</h2>
 			<h3>Date: {post.date}</h3>
-			<p>Created by User: {post.user?.username}</p>
+			<p>Created by User: <Link to={`/users/${post.user_id}`}>{post.user?.username}</Link></p>
+			<img src={post.user?.avatar} className="avatar" />
+			
 			<p>Entry: {post.entry}</p>
 			<p>Games Played: </p>
 			{games.map(game => {
@@ -61,7 +66,7 @@ export default function Show(props) {
 					</div>
 				)
 			})}
-			<Link to={`/posts/${id}/edit`}>Edit</Link>
+			{post.user_id == decodedToken(localStorage.token).user.id ? <Link to={`/posts/${id}/edit`}>Edit</Link> : ''}
 			<Link to={`/posts`}>Back to index</Link>
 			<hr />
 		</div>
