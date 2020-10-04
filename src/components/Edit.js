@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import axios from "axios";
+import dotenv from "dotenv";
 
 export default function Edit(props) {
 	const [post, setPost] = useState([]);
@@ -25,7 +26,7 @@ export default function Edit(props) {
 		event.preventDefault();
 		try {
 			const response = await axios.put(
-				`https://game-diary-board-api.herokuapp.com/posts/${id}/`,
+				`${serverUrl}/posts/${id}/`,
 				formInputs
 			);
 
@@ -41,7 +42,7 @@ export default function Edit(props) {
 
 	const getPost = async () => {
 		try {
-			const response = await fetch(`https://game-diary-board-api.herokuapp.com/posts/${id}`);
+			const response = await fetch(`${serverUrl}/posts/${id}`);
 			const data = await response.json();
 			setPost(data);
 		} catch (error) {
@@ -60,7 +61,7 @@ export default function Edit(props) {
 
 		console.log('trigger')
 		axios.delete(
-				`https://game-diary-board-api.herokuapp.com/posts/${id}/`
+				`${serverUrl}/posts/${id}/`
 			);
 			history.push("/");
 	};

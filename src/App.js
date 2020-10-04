@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import dotenv from "dotenv";
 
 import Posts from "./components/Posts.js";
 import Show from "./components/Show.js";
@@ -32,7 +33,7 @@ export default function App(props) {
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(`https://game-diary-board-api.herokuapp.com/users/login`, {
+			const response = await axios.post(`${serverUrl}/users/login`, {
 				user: {
 					username: state.username,
 					password: state.password,
