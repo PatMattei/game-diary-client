@@ -16,6 +16,7 @@ import UserPosts from "./components/UserPosts.js";
 import { storage } from "./components/firebase/firebase";
 
 export default function App(props) {
+	
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const history = useHistory();
 
@@ -26,6 +27,7 @@ export default function App(props) {
 		email: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	console.log('mesg from APP:', isLoggedIn)
 
 	const decodedToken = (token) => {
 		return jwt_decode(token);
