@@ -6,12 +6,13 @@ import jwt_decode from "jwt-decode";
 
 export default function New(props) {
 	const history = useHistory();
+	let keyCounter = 0;
 
 	const decodedToken = (token) => {
 		return jwt_decode(token);
 	};
 
-	const [formInputs, updateFormInputs] = useState({
+	const [formInputs, setFormInputs] = useState({
 		date: "",
 		entry: "",
 		hidden: false,
@@ -24,59 +25,9 @@ export default function New(props) {
 		const updateInput = Object.assign({}, formInputs, {
 			[event.target.id]: event.target.value,
 		});
-		updateFormInputs(updateInput);
+		setFormInputs(updateInput);
 	};
 
-	const handleSelectedGames = (event) => {
-		setSelectedGames([
-			...selectedGames,
-			{
-				api_ref: event.target.getAttribute('id'),
-				name: event.target.getAttribute('name'),
-				img: event.target.getAttribute('img'),
-				post_id: 10
-			}
-		])
-		console.log(selectedGames)
-	};
-
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-		try {
-			const response = await axios.post("http://localhost:3000/posts", {
-				post: {
-					date: formInputs.date,
-					entry: formInputs.entry,
-					hidden: false, //TODO- send this through properfly or get rid of field
-					user_id: decodedToken(localStorage.token).user.id,
-				},
-			});
-			console.log(response);
-
-			updateFormInputs({
-				date: "",
-				entry: "",
-				hidden: "",
-				search: "",
-			});
-
-			return response;
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
-	const handleGameSubmit = async (event) => {
-		 try {
-			const response = await axios.post("http://localhost:3000/games", {
-				game: selectedGames[0],
-			});
-			console.log(response);
-			history.push(`/users/${decodedToken(localStorage.token).user.id}`);
-		} catch (error) {
-			console.error(error);
-		}
-	};
 
 	var cors_api_url = "https://cors-anywhere.herokuapp.com/";
 	function doCORSRequest(options, printResult) {
@@ -108,12 +59,70 @@ export default function New(props) {
 		try {
 			const response = await axios.post(searchString);
 			const searchData = response.data.results;
-			console.log(searchData);
 			setGames(searchData);
 
-			updateFormInputs({
+			setFormInputs({
 				search: "",
 			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleSelectedGames = (event) => {
+		setSelectedGames([
+			...selectedGames,
+			{
+				api_ref: event.target.getAttribute('api_ref'),
+				name: event.target.getAttribute('name'),
+				img: event.target.getAttribute('img'),
+				post_id: ''
+			}
+		])
+		setGames([]);
+	};
+
+
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		try {
+			const response = await axios.post("http://localhost:3000/posts", {
+				post: {
+					date: formInputs.date,
+					entry: formInputs.entry,
+					hidden: false, //TODO- send this through properfly or get rid of field
+					user_id: decodedToken(localStorage.token).user.id,
+				},
+			});
+
+			setFormInputs({
+				date: "",
+				entry: "",
+				hidden: "",
+				search: "",
+			});
+
+			let result = await response; // wait until the promise resolves (*)
+
+			if (result) {
+				selectedGames.forEach(game => {
+					handleGameSubmit(game, result)
+				})
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const handleGameSubmit = async (game, response) => {
+		game.post_id = response.data.id;
+		try {
+			const response = await axios.post("http://localhost:3000/games", {
+				game: game,
+			});
+			console.log(response);
+			history.push(`/users/${decodedToken(localStorage.token).user.id}`);
 		} catch (error) {
 			console.error(error);
 		}
@@ -142,12 +151,23 @@ export default function New(props) {
 				<input
 					type="checkbox"
 					id="hidden"
-					value={formInputs.entry}
+					value={formInputs.hidden}
 					onChange={handleChange}
 				/>
 
 				<input type="submit" className="submit" />
 			</form>
+
+			<ul className="selectedGames">
+				{selectedGames.map(game => {
+					keyCounter++
+					return (
+						<li key={keyCounter}>
+							<img src={game.img} />
+						</li>
+					)
+				})}
+			</ul>
 
 			<form onSubmit={handleSearch}>
 				<label htmlFor="search">Search</label>
@@ -157,15 +177,11 @@ export default function New(props) {
 					value={formInputs.search}
 					onChange={handleChange}
 				/>
-				<input type="submit" className="submit" />
-			</form>
-
-			<form onSubmit={handleGameSubmit}>
-				<input type="submit" value="Submit games" />
+				<input type="submit" className="submit" value="Search" />
 			</form>
 
 			<div id="searchBox">
-				{games.map((game) => {
+				{games.map(game => {
 					return (
 						<div key={game.guid}>
 							<p>Game entry ID: {game.guid}</p>
@@ -183,7 +199,6 @@ export default function New(props) {
 					);
 				})}
 			</div>
-			
 		</>
 	);
 }

@@ -55,6 +55,8 @@ export default function Show(props) {
 					<div key={game.id}>
 						<p>Game entry ID: {game.id}</p>
 						<p>Game api_ref: {game.api_ref}</p>
+						<p>Game Name: {game.name}</p>
+						<img src={game.img} />
 						<p>Game entry: {game.entry}</p>
 						<hr />
 					</div>
