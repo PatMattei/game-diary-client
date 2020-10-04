@@ -11,7 +11,7 @@ export default function Show(props) {
 
 	const getGames = async () => {
 		try {
-			const response = await fetch(`${serverUrl}/games`);
+			const response = await fetch(`https://game-diary-board-api.herokuapp.com/games`);
 			const data = await response.json();
 			const filteredData = data.filter(game => game.post_id === parseInt(id));
 			
@@ -29,7 +29,7 @@ export default function Show(props) {
 
 	const getPost = async () => {
 		try {
-			const response = await fetch(`${serverUrl}/posts/${id}`);
+			const response = await fetch(`https://game-diary-board-api.herokuapp.com/posts/${id}`);
 			const data = await response.json();
 			setPost(data);
 		} catch (error) {

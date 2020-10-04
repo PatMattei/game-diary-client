@@ -32,7 +32,7 @@ export default function App(props) {
 	const handleLogin = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(`${serverUrl}/users/login`, {
+			const response = await axios.post(`https://game-diary-board-api.herokuapp.com/users/login`, {
 				user: {
 					username: state.username,
 					password: state.password,

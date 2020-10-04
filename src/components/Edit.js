@@ -25,7 +25,7 @@ export default function Edit(props) {
 		event.preventDefault();
 		try {
 			const response = await axios.put(
-				`${serverUrl}/posts/${id}/`,
+				`https://game-diary-board-api.herokuapp.com/posts/${id}/`,
 				formInputs
 			);
 
@@ -41,7 +41,7 @@ export default function Edit(props) {
 
 	const getPost = async () => {
 		try {
-			const response = await fetch(`${serverUrl}/posts/${id}`);
+			const response = await fetch(`https://game-diary-board-api.herokuapp.com/posts/${id}`);
 			const data = await response.json();
 			setPost(data);
 		} catch (error) {
@@ -60,7 +60,7 @@ export default function Edit(props) {
 
 		console.log('trigger')
 		axios.delete(
-				`${serverUrl}/posts/${id}/`
+				`https://game-diary-board-api.herokuapp.com/posts/${id}/`
 			);
 			history.push("/");
 	};

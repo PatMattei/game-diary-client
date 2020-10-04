@@ -89,7 +89,7 @@ export default function New(props) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(`${serverUrl}/posts`, {
+			const response = await axios.post(`https://game-diary-board-api.herokuapp.com/posts`, {
 				post: {
 					date: formInputs.date,
 					entry: formInputs.entry,
@@ -120,7 +120,7 @@ export default function New(props) {
 	const handleGameSubmit = async (game, response) => {
 		game.post_id = response.data.id;
 		try {
-			const response = await axios.post(`${serverUrl}/games`, {
+			const response = await axios.post(`https://game-diary-board-api.herokuapp.com/games`, {
 				game: game,
 			});
 			console.log(response);

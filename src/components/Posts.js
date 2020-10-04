@@ -11,7 +11,7 @@ export default function Posts(props) {
 
 	const getPosts = async () => {
 		try {
-			const response = await fetch(`${serverUrl}/posts`);
+			const response = await fetch(`https://game-diary-board-api.herokuapp.com/posts`);
 			const data = await response.json();
 			setPosts(data);
 			console.log(data);
@@ -27,7 +27,7 @@ export default function Posts(props) {
 
 	const getGames = async () => {
 		try {
-			const response = await fetch(`${serverUrl}/games`);
+			const response = await fetch(`https://game-diary-board-api.herokuapp.com/games`);
 			const data = await response.json();
 			setGames(data);
 
