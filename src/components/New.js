@@ -8,6 +8,7 @@ export default function New(props) {
 	const history = useHistory();
 	let keyCounter = 0;
 
+	
 	const decodedToken = (token) => {
 		return jwt_decode(token);
 	};
