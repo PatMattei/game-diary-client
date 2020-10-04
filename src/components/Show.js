@@ -77,8 +77,7 @@ export default function Show(props) {
 					</div>
 				)
 			})}
-			{console.log(logInCheck())}
-			{console.log(post.user_id)}
+			
 			{post.user_id == logInCheck() ? <Link to={`/posts/${id}/edit`}>Edit</Link> : ''}
 			<Link to={`/posts`}>Back to index</Link>
 			<hr />

@@ -14,7 +14,7 @@ export default function SignUp(props) {
 	const handleSignUp = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(`${serverUrl}users`, {
+			const response = await axios.post(`${serverUrl}/users`, {
 				user: {
 					username: props.state.username,
 					password: props.state.password,
@@ -79,7 +79,7 @@ export default function SignUp(props) {
 
 	return (
 		<form onSubmit={handleSignUp}>
-			<h1>Create Your Account- Check for upload</h1>
+			<h1>Create Your Account</h1>
 			<label htmlFor="username">Username</label>
 			<input
 				type="text"
@@ -102,7 +102,7 @@ export default function SignUp(props) {
 				<input type="file" onChange={handleImageAsFile} />
 				<br />
 				<img
-					src={imageAsUrl.imgUrl || "http://via.placeholder.com/100"}
+					src={imageAsUrl.imgUrl || "https://via.placeholder.com/100"}
 					alt="avatar"
 					className="user_avatar"
 				/>
