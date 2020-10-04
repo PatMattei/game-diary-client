@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 
 
 export default function Posts(props) {
 	const [posts, setPosts] = useState([]);
-	const [games, setGames] = useState([]);
-
 	const getPosts = async () => {
 		try {
 			const response = await fetch("http://localhost:3000/posts");
@@ -23,74 +20,17 @@ export default function Posts(props) {
 		})();
 	}, []);
 
-	const getGames = async () => {
-		try {
-			const response = await fetch("http://localhost:3000/games");
-			const data = await response.json();
-			setGames(data);
-
-			console.log(data);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-	useEffect(() => {
-		(async function () {
-			await getGames();
-		})();
-	}, []);
-
-	var cors_api_url = "https://cors-anywhere.herokuapp.com/";
-	function doCORSRequest(options, printResult) {
-		var x = new XMLHttpRequest();
-		x.open(options.method, cors_api_url + options.url);
-		x.onload = x.onerror = function () {
-			printResult(
-				options.method +
-					" " +
-					options.url +
-					"\n" +
-					x.status +
-					" " +
-					x.statusText +
-					"\n\n" +
-					(x.responseText || "")
-			);
-		};
-		if (/^POST/i.test(options.method)) {
-			x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		}
-		x.send(options.data);
-	}
-
-	const apiLookup = async (guid) => {
-		try {
-			const response = await axios.post(`https://cors-anywhere.herokuapp.com/giantbomb.com/api/game/${guid}/?api_key=${process.env.REACT_APP_KEY}&format=json`);
-			console.log(response.data.results);
-			return response.data.results;
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-
-
 	return (
 		<div>
 			<h2>Posts</h2>
-			{posts.map(post => {
+			{posts.map((post) => {
 				return (
 					<div key={post.id} className="post">
 						<h3>Date: {post.date}</h3>
 						<p>Post ID: {post.id}</p>
-						<p>Created by User: <Link to={`/users/${post.user_id}`}>{post.user.username}</Link></p>
+						<p>Created by: User ID: {post.user_id}</p>
 						<p>Entry: {post.entry}</p>
 						<Link to={`/posts/${post.id}`}>See Post</Link>
-						{games.forEach(game => { 
-							if (game.post_id === post.id) {
-								return <p>Game Entry ID: {game.id}</p>
-							}
-						})}
 						<hr />
 					</div>
 				);
