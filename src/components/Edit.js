@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import axios from "axios";
+import dotenv from "dotenv";
 
 export default function Edit(props) {
 	const [post, setPost] = useState([]);

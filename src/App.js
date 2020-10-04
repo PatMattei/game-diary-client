@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import dotenv from "dotenv";
 
 import Posts from "./components/Posts.js";
 import Show from "./components/Show.js";
