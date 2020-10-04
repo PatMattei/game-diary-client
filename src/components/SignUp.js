@@ -9,12 +9,12 @@ import { storage } from "./firebase/firebase";
 export default function SignUp(props) {
 	const history = useHistory();
 
-	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000/";
 
 	const handleSignUp = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(`${serverUrl}/users`, {
+			const response = await axios.post(`${serverUrl}users`, {
 				user: {
 					username: props.state.username,
 					password: props.state.password,
