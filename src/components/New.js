@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import jwt_decode from "jwt-decode";
 
 export default function New(props) {
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const history = useHistory();
 	let keyCounter = 0;
 
@@ -88,7 +89,7 @@ export default function New(props) {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post("http://localhost:3000/posts", {
+			const response = await axios.post(`${serverUrl}/posts`, {
 				post: {
 					date: formInputs.date,
 					entry: formInputs.entry,
@@ -119,7 +120,7 @@ export default function New(props) {
 	const handleGameSubmit = async (game, response) => {
 		game.post_id = response.data.id;
 		try {
-			const response = await axios.post("http://localhost:3000/games", {
+			const response = await axios.post(`${serverUrl}/games`, {
 				game: game,
 			});
 			console.log(response);
