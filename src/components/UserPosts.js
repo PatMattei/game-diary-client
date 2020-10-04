@@ -7,6 +7,8 @@ export default function Posts(props) {
 	const [posts, setPosts] = useState([]);
 	const [games, setGames] = useState([]);
 
+	const id = props.match.params.id;
+
 	const getPosts = async () => {
 		try {
 			const response = await fetch("http://localhost:3000/posts");
@@ -77,24 +79,26 @@ export default function Posts(props) {
 
 	return (
 		<div>
-			<p>{props.state.loggedInUser}</p>
-			<h2>Posts</h2>
+			<h2>Posts By This USer</h2>
+
 			{posts.map(post => {
-				return (
-					<div key={post.id} className="post">
-						<h3>Date: {post.date}</h3>
-						<p>Post ID: {post.id}</p>
-						<p>Created by User: <Link to={`/users/${post.user_id}`}>{post.user.username}</Link></p>
-						<p>Entry: {post.entry}</p>
-						<Link to={`/posts/${post.id}`}>See Post</Link>
-						{games.forEach(game => { 
-							if (game.post_id === post.id) {
-								return <p>Game Entry ID: {game.id}</p>
-							}
-						})}
-						<hr />
-					</div>
-				);
+				if (post.user_id == id) {
+					return (
+						<div key={post.id} className="post">
+							<h3>Date: {post.date}</h3>
+							<p>Post ID: {post.id}</p>
+							<p>Created by User: {post.user.username}</p>
+							<p>Entry: {post.entry}</p>
+							<Link to={`/posts/${post.id}`}>See Post</Link>
+							{games.forEach(game => { 
+								if (game.post_id === post.id) {
+									return <p>Game Entry ID: {game.id}</p>
+								}
+							})}
+							<hr />
+						</div>
+					);
+				}
 			})}
 		</div>
 	);
