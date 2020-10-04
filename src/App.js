@@ -67,6 +67,8 @@ export default function App(props) {
 		}
 	}, [isLoggedIn]);
 
+	
+
 	const handleInput = (event) => {
 		setState({ ...state, [event.target.name]: event.target.value });
 	};

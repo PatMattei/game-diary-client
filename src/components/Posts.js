@@ -64,7 +64,6 @@ export default function Posts(props) {
 										<div key={keyCounter}>
 											<p>Game Name: {game.name}</p>
 											<img src={game.img} />
-											<hr />
 										</div>
 									);
 								}
