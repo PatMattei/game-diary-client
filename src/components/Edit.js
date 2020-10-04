@@ -12,6 +12,7 @@ export default function Edit(props) {
 	});
 
 	const id = props.match.params.id;
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 	const handleChange = (event) => {
 		const updateInput = Object.assign({}, formInputs, {
@@ -24,7 +25,7 @@ export default function Edit(props) {
 		event.preventDefault();
 		try {
 			const response = await axios.put(
-				`http://localhost:3000/posts/${id}/`,
+				`${serverUrl}/posts/${id}/`,
 				formInputs
 			);
 
@@ -40,7 +41,7 @@ export default function Edit(props) {
 
 	const getPost = async () => {
 		try {
-			const response = await fetch(`http://localhost:3000/posts/${id}`);
+			const response = await fetch(`${serverUrl}/posts/${id}`);
 			const data = await response.json();
 			setPost(data);
 		} catch (error) {
@@ -59,7 +60,7 @@ export default function Edit(props) {
 
 		console.log('trigger')
 		axios.delete(
-				`http://localhost:3000/posts/${id}/`
+				`${serverUrl}/posts/${id}/`
 			);
 			history.push("/");
 	};

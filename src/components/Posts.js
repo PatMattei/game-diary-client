@@ -7,9 +7,11 @@ export default function Posts(props) {
 	const [posts, setPosts] = useState([]);
 	const [games, setGames] = useState([]);
 
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
+
 	const getPosts = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/posts");
+			const response = await fetch(`${serverUrl}/posts`);
 			const data = await response.json();
 			setPosts(data);
 			console.log(data);
@@ -25,7 +27,7 @@ export default function Posts(props) {
 
 	const getGames = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/games");
+			const response = await fetch(`${serverUrl}/games`);
 			const data = await response.json();
 			setGames(data);
 

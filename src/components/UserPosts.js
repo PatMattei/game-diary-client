@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Posts(props) {
 	const [posts, setPosts] = useState([]);
 	const [games, setGames] = useState([]);
 
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
+
 	const id = props.match.params.id;
 
 	const getPosts = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/posts");
+			const response = await fetch(`${serverUrl}/posts`);
 			const data = await response.json();
 			setPosts(data);
 			console.log(data);
@@ -27,7 +28,7 @@ export default function Posts(props) {
 
 	const getGames = async () => {
 		try {
-			const response = await fetch("http://localhost:3000/games");
+			const response = await fetch(`${serverUrl}/games`);
 			const data = await response.json();
 			setGames(data);
 
@@ -67,15 +68,15 @@ export default function Posts(props) {
 
 	const apiLookup = async (guid) => {
 		try {
-			const response = await axios.post(`https://cors-anywhere.herokuapp.com/giantbomb.com/api/game/${guid}/?api_key=${process.env.REACT_APP_KEY}&format=json`);
+			const response = await axios.post(
+				`https://cors-anywhere.herokuapp.com/giantbomb.com/api/game/${guid}/?api_key=${process.env.REACT_APP_KEY}&format=json`
+			);
 			console.log(response.data.results);
 			return response.data.results;
 		} catch (error) {
 			console.error(error);
 		}
-	}
-
-
+	};
 
 	return (
 		<div>
@@ -90,9 +91,9 @@ export default function Posts(props) {
 							<p>Created by User: {post.user.username}</p>
 							<p>Entry: {post.entry}</p>
 							<Link to={`/posts/${post.id}`}>See Post</Link>
-							{games.forEach(game => { 
+							{games.forEach((game) => {
 								if (game.post_id === post.id) {
-									return <p>Game Entry ID: {game.id}</p>
+									return <p>Game Entry ID: {game.id}</p>;
 								}
 							})}
 							<hr />

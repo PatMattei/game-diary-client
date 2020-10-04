@@ -6,12 +6,12 @@ export default function Show(props) {
 	const [post, setPost] = useState([]);
 	const [games, setGames] = useState([]);
 
-
+	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const id = props.match.params.id;
 
 	const getGames = async () => {
 		try {
-			const response = await fetch(`http://localhost:3000/games`);
+			const response = await fetch(`${serverUrl}/games`);
 			const data = await response.json();
 			const filteredData = data.filter(game => game.post_id === parseInt(id));
 			
@@ -29,7 +29,7 @@ export default function Show(props) {
 
 	const getPost = async () => {
 		try {
-			const response = await fetch(`http://localhost:3000/posts/${id}`);
+			const response = await fetch(`${serverUrl}/posts/${id}`);
 			const data = await response.json();
 			setPost(data);
 		} catch (error) {
@@ -62,8 +62,7 @@ export default function Show(props) {
 					</div>
 				)
 			})}
-			{console.log(props.loggedInUser)}
-			{props.loggedInUser === 'abc' ? <Link to={`/posts/${id}/edit`}>Edit</Link> : ''}
+			<Link to={`/posts/${id}/edit`}>Edit</Link>
 			<Link to={`/posts`}>Back to index</Link>
 			<hr />
 		</div>
