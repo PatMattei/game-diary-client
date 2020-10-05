@@ -9,9 +9,8 @@ export default function Show(props) {
 	const [games, setGames] = useState([]);
 	const [comments, setComments] = useState([]);
 	const [formInputs, setFormInputs] = useState({
-		comment: ""
+		comment: "",
 	});
-
 
 	const handleChange = (event) => {
 		const updateInput = Object.assign({}, formInputs, {
@@ -65,12 +64,6 @@ export default function Show(props) {
 		})();
 	}, []);
 
-	useEffect(() => {
-		(async function () {
-			await getComments();
-		})();
-	}, [comments]);
-
 	const getPost = async () => {
 		try {
 			const response = await fetch(`${serverUrl}/posts/${id}`);
@@ -86,7 +79,6 @@ export default function Show(props) {
 		})();
 	}, []);
 
-
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		try {
@@ -99,19 +91,17 @@ export default function Show(props) {
 			});
 
 			setFormInputs({
-				newComment: ""
+				newComment: "",
 			});
 
+			getComments();
+
 			let result = await response; // wait until the promise resolves (*)
-			console.log(result)
+			console.log(result);
 		} catch (error) {
 			console.error(error);
 		}
 	};
-
-
-
-
 
 	return (
 		<div key={post.id} className="post">
@@ -136,7 +126,6 @@ export default function Show(props) {
 				})}
 			</div>
 
-		
 			<div className="post-bottom">
 				<Link to={`/posts`}>Back to index</Link>
 				{post.user_id == logInCheck() ? (
@@ -147,19 +136,19 @@ export default function Show(props) {
 			</div>
 
 			<div className="comments">
-			<h4>Comments:</h4>
+				<h4>Comments:</h4>
 				{comments.map((comment) => {
-					return (
-						<div key={comment.id} className="comment">
-							<img src={comment.user?.avatar} className="avatar" />
-							<b>Comment by: {comment.user?.username} </b>
-							<p>{comment.entry}</p>
-						</div>
-					);
+					if (comment.post_id == id) {
+						return (
+							<div key={comment.id} className="comment">
+								<img src={comment.user?.avatar} className="avatar" />
+								<b>Comment by: {comment.user?.username} </b>
+								<p>{comment.entry}</p>
+							</div>
+						);
+					}
 				})}
 			</div>
-
-
 
 			{localStorage.token != "undefined" && localStorage.token ? (
 				<form onSubmit={handleSubmit}>
