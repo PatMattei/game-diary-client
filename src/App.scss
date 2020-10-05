@@ -1,0 +1,168 @@
+$orange:  #ff800c;
+$black: #242423;
+$platinum: #e8e9eb;
+$offwhite: #f9f9f9;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #e8e9eb;
+	color: $black;
+	padding: 0 2%;
+}
+
+img {
+	max-width: 100%;
+}
+
+button {
+	background-color: $orange;
+	color: $platinum;
+	border-radius: 20px;
+	padding: 5px;
+	font-weight: bold;
+}
+
+input {
+	margin-top: 10px;
+}
+
+textarea {
+	@extend input;
+	width: 80%;
+	vertical-align: top;
+}
+
+button:hover {
+	cursor: pointer;
+	color: $orange;
+	background-color: $platinum;
+}
+
+nav {
+	background-color: $black;
+	border-radius: 0 0 20px 20px;
+	border-bottom: solid 2px $orange;
+	margin: auto;
+	color: #e8e9eb;
+	padding: .5% 1%;
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+
+	.avatar {
+		width: 30%;
+		height: auto;
+	}
+}
+
+a {
+	color: $orange;
+	font-weight: bold;
+}
+
+.avatar {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.post {
+	background-color: #f9f9f9;
+	width: 90%;
+	border-radius: 20px;
+	margin: 20px auto;
+	padding: 1% 2%;
+	-webkit-box-shadow: 2px 2px 5px 1px rgba(36, 36, 35, 0.69);
+	-moz-box-shadow: 2px 2px 5px 1px rgba(36, 36, 35, 0.69);
+	box-shadow: 2px 2px 5px 1px rgba(36, 36, 35, 0.69);
+
+	.avatar {
+		width: 20%;
+		height: auto;
+	}
+}
+
+.post-top {
+	display: flex;
+	justify-content: space-between;
+}
+.post-bottom {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.date {
+	font-weight: bold;
+}
+
+.author-info {
+	width: 40%;
+}
+
+
+.games {
+	display: flex;
+}
+
+.game {
+	width: 18%;
+	margin-right: 2%;
+}
+
+.game-img {
+	width: 100%;
+	height: auto;
+}
+
+.entry-text {
+	margin: 1% 0;
+}
+
+.user-form {
+	@extend .post
+}
+.game-form {
+	@extend .post
+}
+
+#searchBox {
+	margin-top: 20px;
+
+	.game {
+		margin-bottom: 30px;
+		padding-bottom: 10px;
+		border-bottom: solid 3px $black;
+	}
+}
+
+.submit-btn {
+	@extend button;
+}
+
+.submit-post {
+	float: right;
+}
+
+.selectedGames {
+	list-style-type: none;
+	li {
+		width: 20%;
+		margin-bottom: 40px;
+		padding-bottom: 10px;
+		border-bottom: solid 3px $black;
+		border-right: solid 3px $black;
+	}
+}
+
+.delete {
+	@extend button;
+	background-color: red;
+	color: #fff;
+	border: solid 2px #fff;
+
+}

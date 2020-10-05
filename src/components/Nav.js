@@ -32,10 +32,28 @@ function Nav(props) {
 
 	return (
 		<nav>
-			{navItems}
-			<p>Logged in: {props.isLoggedIn ? "true" : "false"}</p>
-			<p>{props.isLoggedIn ? `Username: ${props.state.loggedInUser}` : "false"}</p>
-			{props.isLoggedIn ? <img src={props.state.avatar}/> : ""}
+			<Link to="/posts/">
+				<h1>Game Diary</h1>
+			</Link>
+
+			{props.isLoggedIn ? (
+				<Link to="/posts/new">
+					<button>New Post</button>
+				</Link>
+			) : (
+				""
+			)}
+			{props.isLoggedIn ? (
+				<div>
+					<div>{`Hello, ${props.state.loggedInUser}`}</div>
+					<Link to="/" onClick={props.handleLogOut}>
+						Logout
+					</Link>
+					<img src={props.state.avatar} className="avatar" />
+				</div>
+			) : (
+				<div><Link to="/users/login">Login</Link> or <Link to="/users/signup">Sign Up</Link></div>
+			)}
 		</nav>
 	);
 }
