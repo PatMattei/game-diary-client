@@ -47,36 +47,35 @@ export default function Posts(props) {
 	}, []);
 
 	return (
-		<div>
-			<h2>Posts</h2>
+		<div className="posts-feed">
+			<h2>Feed</h2>
 			{posts.map((post) => {
 				return (
 					<div key={post.id} className="post">
-						<h3>Date: {post.date}</h3>
-						<p>Post ID: {post.id}</p>
-						<p>
-							Created by User:
-							<Link to={`/users/${post.user_id}`}>{post.user.username}</Link>
-							<img src={post.user.avatar} className="avatar" />
-						</p>
-						<p>Entry: {post.entry}</p>
-						<div>
-							<h4>Games played:</h4>
+						<div className="post-top">
+							<div className="author-info">
+								<img src={post.user.avatar} className="avatar" />
+								By:{" "}
+								<Link to={`/users/${post.user_id}`}>{post.user.username}</Link>
+							</div>
+							<div class="date">Date: {post.date}</div>
+						</div>
+
+						<p className="entry-text"><b>Entry:</b> {post.entry}</p>
+						<h4>Played:</h4>
+						<div className="games">
 							{games.map((game) => {
 								if (game.post_id === post.id) {
 									keyCounter++;
 									return (
-										<div key={keyCounter}>
-											<p>Game Name: {game.name}</p>
+										<div key={keyCounter} className="game">
 											<img src={game.img} />
 										</div>
 									);
 								}
 							})}
 						</div>
-						<Link to={`/posts/${post.id}`}>See Post</Link>
-
-						<hr />
+						<Link to={`/posts/${post.id}`}>See Full Post</Link>
 					</div>
 				);
 			})}

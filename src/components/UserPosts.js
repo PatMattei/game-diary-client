@@ -10,6 +10,7 @@ export default function Posts(props) {
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 	const id = props.match.params.id;
+	let keyCounter = 0;
 
 	const getPosts = async () => {
 		try {
@@ -82,21 +83,37 @@ export default function Posts(props) {
 	return (
 		<div>
 			<h2>View Posts</h2>
-			{posts.map(post => {
+			{posts.map((post) => {
 				if (post.user_id == id) {
 					return (
 						<div key={post.id} className="post">
-							<img src={post.user?.avatar} className="avatar" />
-							<h3>Date: {post.date}</h3>
-							<p>Created by User: {post.user.username}</p>
-							<p>Entry: {post.entry}</p>
-							<Link to={`/posts/${post.id}`}>See Post</Link>
-							{games.forEach((game) => {
-								if (game.post_id === post.id) {
-									return <p>Game Entry ID: {game.id}</p>;
-								}
-							})}
-							<hr />
+							<div className="post-top">
+								<div className="author-info">
+									<img src={post.user.avatar} className="avatar" />
+									By:{" "}
+									<Link to={`/users/${post.user_id}`}>
+										{post.user.username}
+									</Link>
+								</div>
+								<div class="date">Date: {post.date}</div>
+							</div>
+							<p className="entry-text">
+								<b>Entry:</b> {post.entry}
+							</p>
+							<h4>Played:</h4>
+							<div className="games">
+								{games.map((game) => {
+									if (game.post_id === post.id) {
+										keyCounter++;
+										return (
+											<div key={keyCounter} className="game">
+												<img src={game.img} />
+											</div>
+										);
+									}
+								})}
+							</div>
+							<Link to={`/posts/${post.id}`}>See Full Post</Link>
 						</div>
 					);
 				}

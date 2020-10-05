@@ -13,6 +13,8 @@ import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
 import UserPosts from "./components/UserPosts.js";
 
+import './App.scss'
+
 import { storage } from "./components/firebase/firebase";
 
 export default function App(props) {

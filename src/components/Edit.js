@@ -163,13 +163,8 @@ export default function Edit(props) {
 		getGames();
 	};
 
-	const testFunc = () => {
-		setSelectedGames([]);
-	};
-
 	return (
-		<>
-			<input type="button" onClick={testFunc} value="Clear games" />
+		<div className="game-form">
 			<h2>Edit</h2>
 			<form onSubmit={handleSubmit}>
 				<label htmlFor="date">date</label>
@@ -181,15 +176,8 @@ export default function Edit(props) {
 				/>
 				<label htmlFor="entry">entry</label>
 				<textarea id="entry" value={formInputs.entry} onChange={handleChange} />
-				<label htmlFor="hidden">Display in public feed?</label>
-				<input
-					type="checkbox"
-					id="hidden"
-					value={formInputs.hidden}
-					onChange={handleChange}
-				/>
 
-				<input type="submit" className="submit" />
+				<input type="submit" className="submit" className="submit-btn submit-post" value="Submit Post"/>
 			</form>
 
 			<ul className="selectedGames">
@@ -235,9 +223,7 @@ export default function Edit(props) {
 			<div id="searchBox">
 				{apiGames.map((game) => {
 					return (
-						<div key={game.guid}>
-							<p>Game entry ID: {game.guid}</p>
-							<p>Game Name: {game.name}</p>
+						<div key={game.guid} className="game">
 							<img src={game.image.original_url} />
 							<input
 								type="button"
@@ -251,6 +237,6 @@ export default function Edit(props) {
 					);
 				})}
 			</div>
-		</>
+		</div>
 	);
 }
