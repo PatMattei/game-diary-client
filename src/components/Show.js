@@ -65,6 +65,12 @@ export default function Show(props) {
 		})();
 	}, []);
 
+	useEffect(() => {
+		(async function () {
+			await getComments();
+		})();
+	}, [comments]);
+
 	const getPost = async () => {
 		try {
 			const response = await fetch(`${serverUrl}/posts/${id}`);
@@ -145,7 +151,8 @@ export default function Show(props) {
 				{comments.map((comment) => {
 					return (
 						<div key={comment.id} className="comment">
-							<p>{comment.user_id}</p>
+							<img src={comment.user?.avatar} className="avatar" />
+							<b>Comment by: {comment.user?.username} </b>
 							<p>{comment.entry}</p>
 						</div>
 					);
