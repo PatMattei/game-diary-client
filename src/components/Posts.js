@@ -58,7 +58,7 @@ export default function Posts(props) {
 								By:{" "}
 								<Link to={`/users/${post.user_id}`}>{post.user.username}</Link>
 							</div>
-							<div class="date">Date: {post.date}</div>
+							<div className="date">Date: {post.date}</div>
 						</div>
 
 						<p className="entry-text"><b>Entry:</b> {post.entry}</p>

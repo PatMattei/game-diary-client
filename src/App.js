@@ -29,8 +29,6 @@ export default function App(props) {
 		email: "",
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	console.log('mesg from APP:', isLoggedIn)
-
 	const decodedToken = (token) => {
 		return jwt_decode(token);
 	};

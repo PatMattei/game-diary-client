@@ -49,7 +49,7 @@ function Nav(props) {
 					<Link to="/" onClick={props.handleLogOut}>
 						Logout
 					</Link>
-					<img src={props.state.avatar} className="avatar" />
+					<img src={props.state.avatar} className="avatar"  alt=""/>
 				</div>
 			) : (
 				<div><Link to="/users/login">Login</Link> or <Link to="/users/signup">Sign Up</Link></div>

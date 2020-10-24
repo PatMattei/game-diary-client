@@ -82,7 +82,7 @@ export default function Posts(props) {
 
 	return (
 		<div>
-			<h2>View Posts</h2>
+			<h2>Viewing Posts by {id}</h2>
 			{posts.map((post) => {
 				if (post.user_id == id) {
 					return (
@@ -95,7 +95,7 @@ export default function Posts(props) {
 										{post.user.username}
 									</Link>
 								</div>
-								<div class="date">Date: {post.date}</div>
+								<div className="date">Date: {post.date}</div>
 							</div>
 							<p className="entry-text">
 								<b>Entry:</b> {post.entry}
