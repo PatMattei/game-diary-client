@@ -82,7 +82,8 @@ export default function Posts(props) {
 
 	return (
 		<div>
-			<h2>Viewing Posts by {id}</h2>
+			{/* TODO: add user name at top */}
+			<h2>View Post</h2>
 			{posts.map((post) => {
 				if (post.user_id == id) {
 					return (
