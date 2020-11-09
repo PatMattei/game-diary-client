@@ -17,7 +17,6 @@ export default function Posts(props) {
 			const response = await fetch(`${serverUrl}/posts`);
 			const data = await response.json();
 			setPosts(data);
-			console.log(data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -83,7 +82,7 @@ export default function Posts(props) {
 	return (
 		<div>
 			{/* TODO: add user name at top */}
-			<h2>View Post</h2>
+			<h2>View Posts by {id}</h2>
 			{posts.map((post) => {
 				if (post.user_id == id) {
 					return (
@@ -91,7 +90,7 @@ export default function Posts(props) {
 							<div className="post-top">
 								<div className="author-info">
 									<img src={post.user.avatar} className="avatar" />
-									By:{" "}
+									By:
 									<Link to={`/users/${post.user_id}`}>
 										{post.user.username}
 									</Link>

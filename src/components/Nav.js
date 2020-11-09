@@ -8,28 +8,6 @@ function Nav(props) {
 		</Link>,
 	];
 
-	if (props.isLoggedIn) {
-		navItems.push(
-			<Link to="/posts/new" key={2}>
-				New Post
-			</Link>,
-			<Link to="/" onClick={props.handleLogOut} key={3}>
-				Logout
-			</Link>
-		);
-	} else {
-		navItems.push(
-			<Link to="/users/login" key={4}>
-				Login
-			</Link>
-		);
-		navItems.push(
-			<Link to="/users/signup" key={5}>
-				Sign Up
-			</Link>
-		);
-	}
-
 	return (
 		<nav>
 			<Link to="/posts/">
@@ -37,20 +15,18 @@ function Nav(props) {
 			</Link>
 
 			{props.isLoggedIn ? (
-				<Link to="/posts/new">
-					<button>New Post</button>
-				</Link>
-			) : (
-				""
-			)}
-			{props.isLoggedIn ? (
-				<div>
-					<div>{`Hello, ${props.state.loggedInUser}`}</div>
-					<Link to="/" onClick={props.handleLogOut}>
-						Logout
+				<>
+					<Link to="/posts/new">
+						<button>New Post</button>
 					</Link>
-					<img src={props.state.avatar} className="avatar"  alt=""/>
-				</div>
+					<div>
+						<div>{`Hello, ${props.state.loggedInUser}`}</div>
+						<Link to="/" onClick={props.handleLogOut}>
+							Logout
+						</Link>
+						<img src={props.state.avatar} className="avatar"  alt=""/>
+					</div>
+				</>
 			) : (
 				<div><Link to="/users/login">Login</Link> or <Link to="/users/signup">Sign Up</Link></div>
 			)}
