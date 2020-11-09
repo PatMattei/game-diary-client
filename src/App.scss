@@ -12,7 +12,7 @@ $offwhite: #f9f9f9;
 body {
 	background-color: #e8e9eb;
 	color: $black;
-	padding: 0 2%;
+	padding: 0;
 }
 
 img {
@@ -58,6 +58,13 @@ nav {
 		width: 30%;
 		height: auto;
 	}
+
+}
+footer {
+	background-color: $black;
+	color: $offwhite;
+	padding: 2%;
+	margin-top: 20px;
 }
 
 a {

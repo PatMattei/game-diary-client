@@ -12,6 +12,7 @@ import Login from "./components/Login.js";
 import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
 import UserPosts from "./components/UserPosts.js";
+import Footer from "./components/Footer.js";
 
 import './App.scss'
 
@@ -150,6 +151,7 @@ export default function App(props) {
 					</Switch>
 				</BrowserRouter>
 			</div>
+			<Footer/>
 		</div>
 	);
 }
