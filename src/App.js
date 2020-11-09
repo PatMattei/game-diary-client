@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import dotenv from "dotenv";
 
 import Posts from "./components/Posts.js";
 import Show from "./components/Show.js";
@@ -11,8 +12,14 @@ import Login from "./components/Login.js";
 import SignUp from "./components/SignUp.js";
 import Edit from "./components/Edit.js";
 import UserPosts from "./components/UserPosts.js";
+import Footer from "./components/Footer.js";
+
+import './App.scss'
+
+import { storage } from "./components/firebase/firebase";
 
 export default function App(props) {
+	
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const history = useHistory();
 
@@ -21,10 +28,8 @@ export default function App(props) {
 		username: "",
 		password: "",
 		email: "",
-
 	});
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
 	const decodedToken = (token) => {
 		return jwt_decode(token);
 	};
@@ -36,14 +41,15 @@ export default function App(props) {
 				user: {
 					username: state.username,
 					password: state.password,
-					email: state.email,
 				},
 			});
 			localStorage.token = response.data.token;
+
 			setIsLoggedIn();
 
 			setState({
 				loggedInUser: state.username,
+				avatar: response.data.user.avatar,
 				password: "",
 			});
 			//history.push("/");
@@ -85,7 +91,11 @@ export default function App(props) {
 		<div className="App">
 			<div className="container">
 				<BrowserRouter>
-					<Nav isLoggedIn={isLoggedIn} handleLogOut={handleLogOut} />
+					<Nav
+						isLoggedIn={isLoggedIn}
+						state={state}
+						handleLogOut={handleLogOut}
+					/>
 					<Switch>
 						<Route
 							path={`/users/login`}
@@ -121,10 +131,15 @@ export default function App(props) {
 							handleInput={handleInput}
 						/>
 						<Route path={`/posts/new`} component={New} />
-						<Route path={`/posts/:id/edit`} component={Edit} serverUrl={serverUrl}/>
+						<Route
+							path={`/posts/:id/edit`}
+							component={Edit}
+							serverUrl={serverUrl}
+						/>
 						<Route
 							path={`/posts/:id`}
 							component={Show}
+							state={state}
 							isLoggedIn={isLoggedIn}
 						/>
 						<Route
@@ -135,6 +150,7 @@ export default function App(props) {
 						/>
 					</Switch>
 				</BrowserRouter>
+				<Footer/>
 			</div>
 		</div>
 	);

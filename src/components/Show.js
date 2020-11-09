@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
+import dotenv from "dotenv";
+import jwt_decode from "jwt-decode";
 
 export default function Show(props) {
 	const [post, setPost] = useState([]);
@@ -9,12 +10,25 @@ export default function Show(props) {
 	const serverUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 	const id = props.match.params.id;
 
+	const decodedToken = (token) => {
+		return jwt_decode(token);
+	};
+
+	const logInCheck = () => {
+		console.log(props.isLoggedIn);
+		if (localStorage.token != "undefined" && localStorage.token) {
+			return decodedToken(localStorage.token).user.id;
+		} else {
+			return null;
+		}
+	};
+
 	const getGames = async () => {
 		try {
 			const response = await fetch(`${serverUrl}/games`);
 			const data = await response.json();
-			const filteredData = data.filter(game => game.post_id === parseInt(id));
-			
+			const filteredData = data.filter((game) => game.post_id === parseInt(id));
+
 			setGames(filteredData);
 		} catch (error) {
 			console.error(error);
@@ -25,7 +39,6 @@ export default function Show(props) {
 			await getGames();
 		})();
 	}, []);
-
 
 	const getPost = async () => {
 		try {
@@ -42,29 +55,38 @@ export default function Show(props) {
 		})();
 	}, []);
 
-	
 	return (
-		<div>
-			<h2>Post Show</h2>
-			<h3>Date: {post.date}</h3>
-			<p>Created by User: {post.user?.username}</p>
-			<p>Entry: {post.entry}</p>
-			<p>Games Played: </p>
-			{games.map(game => {
-				return (
-					<div key={game.id}>
-						<p>Game entry ID: {game.id}</p>
-						<p>Game api_ref: {game.api_ref}</p>
-						<p>Game Name: {game.name}</p>
-						<img src={game.img} />
-						<p>Game entry: {game.entry}</p>
-						<hr />
-					</div>
-				)
-			})}
-			<Link to={`/posts/${id}/edit`}>Edit</Link>
-			<Link to={`/posts`}>Back to index</Link>
-			<hr />
+		<div key={post.id} className="post">
+			<div className="post-top">
+				<div className="author-info">
+					<img src={post.user?.avatar} className="avatar" />
+					By: <Link to={`/users/${post.user_id}`}>{post.user?.username}</Link>
+				</div>
+				<div className="date">Date: {post.date}</div>
+			</div>
+			<p className="entry-text">
+				<b>Entry:</b> {post.entry}
+			</p>
+			<h4>Played:</h4>
+			<div className="games">
+				{games.map((game) => {
+					return (
+						<div key={game.id} className="game">
+							<img src={game.img} />
+						</div>
+					);
+				})}
+			</div>
+
+			<div className="post-bottom">
+				<Link to={`/posts`}>Back to index</Link>
+				{post.user_id == logInCheck() ? (
+					<Link to={`/posts/${id}/edit`}>Edit</Link>
+				) : (
+					""
+				)}
+				
+			</div>
 		</div>
 	);
 }

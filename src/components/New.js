@@ -62,10 +62,6 @@ export default function New(props) {
 			const response = await axios.post(searchString);
 			const searchData = response.data.results;
 			setGames(searchData);
-
-			setFormInputs({
-				search: "",
-			});
 		} catch (error) {
 			console.error(error);
 		}
@@ -131,40 +127,36 @@ export default function New(props) {
 	};
 
 	return (
-		<>
-			<form onSubmit={handleSubmit}>
+		<div className="game-form">
+			<h2>New Post</h2>
+			<form onSubmit={handleSubmit} >
 				<label htmlFor="date">date</label>
 				<input
 					type="date"
 					id="date"
 					value={formInputs.date}
 					onChange={handleChange}
-				/>
+				/><br />
 
 				<label htmlFor="entry">entry</label>
-				<input
+				<textarea
 					type="text"
 					id="entry"
 					value={formInputs.entry}
 					onChange={handleChange}
 				/>
+				<br/>
 
-				<label htmlFor="hidden">Display in public feed?</label>
-				<input
-					type="checkbox"
-					id="hidden"
-					value={formInputs.hidden}
-					onChange={handleChange}
-				/>
-
-				<input type="submit" className="submit" />
+				<input type="submit" className="submit" className="submit-btn submit-post" value="Submit Post"/>
 			</form>
 
-			<ul className="selectedGames">
+			<p><b>Today I played....</b></p>
+
+			<ul className="selectedGames games">
 				{selectedGames.map(game => {
 					keyCounter++
 					return (
-						<li key={keyCounter}>
+						<li key={keyCounter} className="game">
 							<img src={game.img} />
 						</li>
 					)
@@ -179,15 +171,13 @@ export default function New(props) {
 					value={formInputs.search}
 					onChange={handleChange}
 				/>
-				<input type="submit" className="submit" value="Search" />
+				<input type="submit" className="submit" value="Search" className="submit-btn"/>
 			</form>
 
 			<div id="searchBox">
 				{games.map(game => {
 					return (
-						<div key={game.guid}>
-							<p>Game entry ID: {game.guid}</p>
-							<p>Game Name: {game.name}</p>
+						<div key={game.guid} className="game">
 							<img src={game.image.original_url} />
 							<input
 								type="button"
@@ -201,6 +191,6 @@ export default function New(props) {
 					);
 				})}
 			</div>
-		</>
+		</div>
 	);
 }
