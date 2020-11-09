@@ -150,8 +150,8 @@ export default function App(props) {
 						/>
 					</Switch>
 				</BrowserRouter>
+				<Footer/>
 			</div>
-			<Footer/>
 		</div>
 	);
 }
