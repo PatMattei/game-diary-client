@@ -173,3 +173,17 @@ a {
 	border: solid 2px #fff;
 
 }
+
+.comment {
+	@extend .post;
+	padding: 20px;
+
+	.avatar {
+		width: 20%;
+	}
+
+	p {	
+		margin-top: 20px;
+		font-size: 1.25em;
+	}
+}
