@@ -14,7 +14,7 @@ export default function SignUp(props) {
 	const handleSignUp = async (event) => {
 		event.preventDefault();
 		try {
-			const response = await axios.post(`https://game-diary-board-api.herokuapp.com/users`, {
+			const response = await axios.post(`${serverUrl}/users`, {
 				user: {
 					username: props.state.username,
 					password: props.state.password,
@@ -22,7 +22,9 @@ export default function SignUp(props) {
 					avatar: imageAsUrl.imgUrl,
 				},
 			});
+			console.log(response)
 			props.handleLogin(event);
+
 			history.push("/");
 		} catch (error) {
 			console.log(error);
