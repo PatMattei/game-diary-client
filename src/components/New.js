@@ -31,7 +31,7 @@ export default function New(props) {
 	};
 
 
-	var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+	var cors_api_url = "https://corsanywhere.herokuapp.com/";
 	function doCORSRequest(options, printResult) {
 		var x = new XMLHttpRequest();
 		x.open(options.method, cors_api_url + options.url);
@@ -55,7 +55,7 @@ export default function New(props) {
 	}
 
 	const handleSearch = async (event) => {
-		let searchString = `https://cors-anywhere.herokuapp.com/giantbomb.com/api/search/?format=json&resources=game&api_key=${process.env.REACT_APP_KEY}&limit=100&query=${formInputs.search}`;
+		let searchString = `https://corsanywhere.herokuapp.com/giantbomb.com/api/search/?format=json&resources=game&api_key=${process.env.REACT_APP_KEY}&limit=100&query=${formInputs.search}`;
 
 		event.preventDefault();
 		try {
@@ -147,7 +147,7 @@ export default function New(props) {
 				/>
 				<br/>
 
-				<input type="submit" className="submit" className="submit-btn submit-post" value="Submit Post"/>
+				<input type="submit" className="submit-btn submit-post" value="Submit Post"/>
 			</form>
 
 			<p><b>Today I played....</b></p>

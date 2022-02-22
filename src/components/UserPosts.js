@@ -44,7 +44,7 @@ export default function Posts(props) {
 		})();
 	}, []);
 
-	var cors_api_url = "https://cors-anywhere.herokuapp.com/";
+	var cors_api_url = "https://corsanywhere.herokuapp.com/";
 	function doCORSRequest(options, printResult) {
 		var x = new XMLHttpRequest();
 		x.open(options.method, cors_api_url + options.url);
@@ -70,7 +70,7 @@ export default function Posts(props) {
 	const apiLookup = async (guid) => {
 		try {
 			const response = await axios.post(
-				`https://cors-anywhere.herokuapp.com/giantbomb.com/api/game/${guid}/?api_key=${process.env.REACT_APP_KEY}&format=json`
+				`https://corsanywhere.herokuapp.com/giantbomb.com/api/game/${guid}/?api_key=${process.env.REACT_APP_KEY}&format=json`
 			);
 			console.log(response.data.results);
 			return response.data.results;
